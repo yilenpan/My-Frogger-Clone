@@ -41,7 +41,7 @@ Player.prototype.update = function(){
     if (this.y == 0){
         this.score += 100;
 
-        //added functionality - if you make it to the end, the enemys get faster.
+        //added functionality - if you make it to the end, the enemies get faster.
         allEnemies.forEach(function (enemy){
             enemy.speed += 50;
             console.log(enemy.speed);
@@ -72,10 +72,6 @@ Player.prototype.handleInput = function(key){
 
 
 
-
-
-
-
 // Instantiate your objects and functions.
 
 var checkCollisions = function (){
@@ -100,9 +96,6 @@ var addEnemies = function(x){
 }
 var allEnemies = addEnemies(4);
 var player = new Player;
-
-
-
 
 
 // This listens for key presses and sends the keys to your
