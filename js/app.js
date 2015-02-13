@@ -6,12 +6,12 @@ var Enemy = function() {
     this.speed = Math.floor(Math.random() * 50) + 50;
     this.sprite = 'images/enemy-bug.png';
     this.begin(-100,y)
-}
+};
 
 Enemy.prototype.begin = function(x,y){
     this.x = x;
     this.y = y;
-}
+};
 
 Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
@@ -19,11 +19,11 @@ Enemy.prototype.update = function(dt) {
     if (this.x >= 505){
         this.begin(-100, y);
     }
-}
+};
 
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 
 var Player = function(){
@@ -32,7 +32,7 @@ var Player = function(){
     this.score = 0;
     this.lives = 5;
     this.begin(200, 400);
-}
+};
 
 Player.prototype = Object.create(Enemy.prototype); //copies render and begin function
 
@@ -52,7 +52,7 @@ Player.prototype.update = function(){
         this.x = -400;
         $('#game-over').modal();
     }
-}
+};
 
 Player.prototype.handleInput = function(key){
     //takes keyboard input and changes x,y coords.
@@ -65,9 +65,7 @@ Player.prototype.handleInput = function(key){
     } else if (key === 'down') {
         this.y += (this.y + 80 > 400) ? 0 : 80;
     }
-}
-
-
+};
 
 // Instantiate your objects and functions.
 
@@ -82,7 +80,7 @@ var checkCollisions = function (){
             }
         }
     });
-}
+};
 
 //adds random number of enemies.
 var addEnemies = function(x){
@@ -92,7 +90,7 @@ var addEnemies = function(x){
         arr.push(y);
     }
     return arr;
-}
+};
 var allEnemies = addEnemies(4);
 var player = new Player;
 
