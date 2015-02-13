@@ -1,20 +1,22 @@
 var possibleY = [320, 240, 160, 80];
 
 var Enemy = function() {
-    this.y = possibleY[Math.floor(Math.random() * 4)];
+    y = possibleY[Math.floor(Math.random() * 4)];
     this.speed = Math.floor(Math.random() * 50) + 50;
     this.sprite = 'images/enemy-bug.png';
-    this.begin()
+    this.begin(-100,y)
 }
 
-Enemy.prototype.begin = function(){
-    this.x = -100;
+Enemy.prototype.begin = function(x,y){
+    this.x = x;
+    this.y = y;
 }
 
 Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
+    y = possibleY[Math.floor(Math.random() * 4)];
     if (this.x >= 505){
-        this.begin();
+        this.begin(-100, y);
     }
 }
 
@@ -22,33 +24,30 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+
 var Player = function(){
+    Enemy.call(this);
     this.sprite = 'images/char-boy.png';
     this.score = 0;
     this.lives = 5;
-    this.begin();
+    this.begin(200, 400);
 }
 
-
-Player.prototype.begin = function(){
-    this.x = 200;
-    this.y = 400;
-}
+Player.prototype = Object.create(Enemy.prototype);
 
 Player.prototype.update = function(){
     if (this.y == 0){
-        this.score++;
+        this.score += 100;
+
         //added functionality - if you make it to the end, the enemys get faster.
         allEnemies.forEach(function (enemy){
             enemy.speed += 50;
             console.log(enemy.speed);
         });
-        this.begin();
+        this.begin(200,400);
     }
-}
-
-Player.prototype.render = function(){
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    $("#lives").html(this.lives);
+    $("#score").html(this.score);
 }
 
 Player.prototype.handleInput = function(key){
@@ -79,7 +78,7 @@ var checkCollisions = function (){
         if (enemy.y == self.y){
             if(enemy.x >= self.x - 30 && enemy.x <= self.x + 30){
                 self.lives--;
-                self.begin();
+                self.begin(200,400);
             }
         }
     });
