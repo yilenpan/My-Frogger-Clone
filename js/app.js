@@ -25,7 +25,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
 var Player = function(){
     Enemy.call(this);
     this.sprite = 'images/char-boy.png';
@@ -71,12 +70,11 @@ Player.prototype.handleInput = function(key){
 
 //if player x and y coord ==(ish) enemy x,y coord, lose one life, player.begin()
 var checkCollisions = function (){
-    var self = player;
     allEnemies.forEach(function (enemy){
-        if (enemy.y == self.y){
-            if(enemy.x >= self.x - 30 && enemy.x <= self.x + 30){
-                self.lives--;
-                self.begin(200,400);
+        if (enemy.y == player.y){
+            if(enemy.x >= player.x - 30 && enemy.x <= player.x + 30){
+                player.lives--;
+                player.begin(200,400);
             }
         }
     });
@@ -93,7 +91,6 @@ var addEnemies = function(x){
 };
 var allEnemies = addEnemies(4);
 var player = new Player;
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
