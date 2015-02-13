@@ -1,8 +1,8 @@
 //array of all possible enemy.y locations
-var possibleY = [320, 240, 160, 80];
+var POSSIBLE_Y = [320, 240, 160, 80];
 
 var Enemy = function() {
-    y = possibleY[Math.floor(Math.random() * 4)];
+    y = POSSIBLE_Y[Math.floor(Math.random() * 4)];
     this.speed = Math.floor(Math.random() * 50) + 50;
     this.sprite = 'images/enemy-bug.png';
     this.begin(-100,y)
@@ -15,7 +15,7 @@ Enemy.prototype.begin = function(x,y){
 
 Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
-    y = possibleY[Math.floor(Math.random() * 4)];
+    y = POSSIBLE_Y[Math.floor(Math.random() * 4)];
     if (this.x >= 505){
         this.begin(-100, y);
     }
@@ -59,7 +59,7 @@ Player.prototype.handleInput = function(key){
     if (key === 'left') {
         this.x -= (this.x - 100 < 0) ? 0 : 100;
     } else if (key === 'right') {
-        this.x += (this.x + 100 > 505) ? 0 : 100;
+        this.x += (this.x + 100 > 400) ? 0 : 100;
     } else if (key === 'up') {
         this.y -= (this.y - 80 < 0) ? 0 : 80;
     } else if (key === 'down') {
