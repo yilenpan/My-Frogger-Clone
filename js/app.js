@@ -1,3 +1,9 @@
+Array.prototype.forEach = function(callback) {
+  for (var i = 0; i < this.length; i++)
+    callback(this[i]);
+}
+
+var possibleY = [320, 240, 160, 80];
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -5,7 +11,15 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    this.y = possibleY[Math.floor(Math.random() * 4)];
+    this.speed = Math.floor(Math.random() * 50) + 50;
     this.sprite = 'images/enemy-bug.png';
+    this.begin()
+
+}
+
+Enemy.prototype.begin = function(){
+    this.x = -100;
 }
 
 // Update the enemy's position, required method for game
@@ -14,6 +28,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
+    if (this.x >= 505){
+        this.begin();
+    }
+
 }
 
 // Draw the enemy on the screen, required method for game
@@ -25,10 +44,63 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+var Player = function(){
+    this.sprite = 'images/char-boy.png';
+    this.score = 0;
+    this.lives = 5;
+    this.begin();
+}
+
+Player.prototype.begin = function(){
+    this.x = 200;
+    this.y = 400;
+}
+
+Player.prototype.update = function(){
+    if (this.y == 0){
+        this.score++;
+        console.log(this.score);
+        this.begin();
+    }
+    //this.x = 300;
+    //this.y = 400;
+
+}
+
+Player.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Player.prototype.handleInput = function(key){
+    //takes keyboard input and changes x,y coords. re-renders after switch.
+    if (key === 'left') {
+        this.x -= (this.x - 100 < 0) ? 0 : 100;
+    } else if (key === 'right') {
+        this.x += (this.x + 100 > 505) ? 0 : 100;
+    } else if (key === 'up') {
+        this.y -= (this.y - 80 < 0) ? 0 : 80;
+    } else if (key === 'down') {
+        this.y += (this.y + 80 > 400) ? 0 : 80;
+    }
+    console.log(key, this.x, this.y);
+
+}
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+var addEnemies = function(x){
+    var arr = new Array;
+    for(var i = 0; i < x; i++){
+        var y = new Enemy;
+        arr.push(y);
+    }
+    return arr;
+}
+var allEnemies = addEnemies(8);
+var player = new Player;
 
 
 
