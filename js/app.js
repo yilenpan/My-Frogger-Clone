@@ -1,4 +1,6 @@
 var possibleY = [320, 240, 160, 80];
+var gameOver = new Image();
+gameOver.src = 'images/game-over.png'
 
 var Enemy = function() {
     y = possibleY[Math.floor(Math.random() * 4)];
@@ -48,6 +50,10 @@ Player.prototype.update = function(){
     }
     $("#lives").html(this.lives);
     $("#score").html(this.score);
+    if (this.lives <= 0){
+        this.x = -400;
+        $('#game-over').modal();
+    }
 }
 
 Player.prototype.handleInput = function(key){
