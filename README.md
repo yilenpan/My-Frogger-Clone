@@ -8,4 +8,4 @@ for self-checking their submission.
 
 Added some stuff to the game - It now keeps score and keeps track of your lives. Every time you make it to the end, the enemies speed up and you gain 100 points.
 
-
+When you run out of lives, a modal pops up and asks if you want to try again. Fun project!
