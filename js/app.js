@@ -1,6 +1,5 @@
+//array of all possible enemy.y locations
 var possibleY = [320, 240, 160, 80];
-var gameOver = new Image();
-gameOver.src = 'images/game-over.png'
 
 var Enemy = function() {
     y = possibleY[Math.floor(Math.random() * 4)];
@@ -35,21 +34,20 @@ var Player = function(){
     this.begin(200, 400);
 }
 
-Player.prototype = Object.create(Enemy.prototype);
+Player.prototype = Object.create(Enemy.prototype); //copies render and begin function
 
 Player.prototype.update = function(){
     if (this.y == 0){
         this.score += 100;
-
-        //added functionality - if you make it to the end, the enemies get faster.
-        allEnemies.forEach(function (enemy){
+        allEnemies.forEach(function (enemy){ //added functionality - if you make it to the end, the enemies get faster.
             enemy.speed += 50;
-            console.log(enemy.speed);
         });
         this.begin(200,400);
     }
-    $("#lives").html(this.lives);
-    $("#score").html(this.score);
+    //update score and lives
+    $('#lives').html(this.lives);
+    $('#score').html(this.score);
+    //if dead, pop up game-over modal
     if (this.lives <= 0){
         this.x = -400;
         $('#game-over').modal();
@@ -67,13 +65,13 @@ Player.prototype.handleInput = function(key){
     } else if (key === 'down') {
         this.y += (this.y + 80 > 400) ? 0 : 80;
     }
-    console.log(key, this.x, this.y);
 }
 
 
 
 // Instantiate your objects and functions.
 
+//if player x and y coord ==(ish) enemy x,y coord, lose one life, player.begin()
 var checkCollisions = function (){
     var self = player;
     allEnemies.forEach(function (enemy){
@@ -86,6 +84,7 @@ var checkCollisions = function (){
     });
 }
 
+//adds random number of enemies.
 var addEnemies = function(x){
     var arr = new Array;
     for(var i = 0; i < x; i++){
