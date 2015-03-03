@@ -1,11 +1,15 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+Hello! Welcome to my frogger app.
 
-for self-checking their submission.
+The point of the game is to gain as many points as possible. On the left is a point/life tracker. Every time your player reaches the end, the bugs speed up!
 
+It's up to you to keep him alive!
 
-Added some stuff to the game - It now keeps score and keeps track of your lives. Every time you make it to the end, the enemies speed up and you gain 100 points.
+Use your arrow keys to control the player.
 
-When you run out of lives, a modal pops up and asks if you want to try again. Fun project!
+To mess with the difficulty level, simply change the SPEED variable. Every time your
+character hits the end of the board, the enemy speed will increase + SPEED. The higher
+the number, the harder it is.
+

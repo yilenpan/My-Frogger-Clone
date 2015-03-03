@@ -1,23 +1,24 @@
 //array of all possible enemy.y locations
 var POSSIBLE_Y = [320, 240, 160, 80];
+var SPEED = 50; //change this to make the game more difficult or easier
 
 var Enemy = function() {
-    y = POSSIBLE_Y[Math.floor(Math.random() * 4)];
+    y = POSSIBLE_Y[Math.floor(Math.random() * 4)]; //randomizes Y position of bugs
     this.speed = Math.floor(Math.random() * 50) + 50;
     this.sprite = 'images/enemy-bug.png';
     this.begin(-100,y)
 };
 
-Enemy.prototype.begin = function(x,y){
+Enemy.prototype.begin = function(x,y) {
     this.x = x;
     this.y = y;
 };
 
 Enemy.prototype.update = function(dt) {
-    this.x += this.speed * dt;
+    this.x += this.speed * dt; //sets speed of enemy
     y = POSSIBLE_Y[Math.floor(Math.random() * 4)];
-    if (this.x >= 505){
-        this.begin(-100, y);
+    if (this.x >= 505) {
+        this.begin(-100, y); //once bug hits the end, call begining
     }
 };
 
@@ -25,7 +26,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var Player = function(){
+var Player = function() {
     Enemy.call(this);
     this.sprite = 'images/char-boy.png';
     this.score = 0;
@@ -33,13 +34,13 @@ var Player = function(){
     this.begin(200, 400);
 };
 
-Player.prototype = Object.create(Enemy.prototype); //copies render and begin function
+Player.prototype = Object.create( Enemy.prototype ); //copies render and begin function
 
-Player.prototype.update = function(){
-    if (this.y == 0){
+Player.prototype.update = function() {
+    if (this.y == 0) {
         this.score += 100;
-        allEnemies.forEach(function (enemy){ //added functionality - if you make it to the end, the enemies get faster.
-            enemy.speed += 50;
+        allEnemies.forEach(function(enemy) { //added functionality - if you make it to the end, the enemies get faster.
+            enemy.speed += SPEED;
         });
         this.begin(200,400);
     }
@@ -47,13 +48,13 @@ Player.prototype.update = function(){
     $('#lives').html(this.lives);
     $('#score').html(this.score);
     //if dead, pop up game-over modal
-    if (this.lives <= 0){
+    if (this.lives <= 0) {
         this.x = -400;
         $('#game-over').modal();
     }
 };
 
-Player.prototype.handleInput = function(key){
+Player.prototype.handleInput = function(key) {
     //takes keyboard input and changes x,y coords.
     if (key === 'left') {
         this.x -= (this.x - 100 < 0) ? 0 : 100;
@@ -69,10 +70,10 @@ Player.prototype.handleInput = function(key){
 // Instantiate your objects and functions.
 
 //if player x and y coord ==(ish) enemy x,y coord, lose one life, player.begin()
-var checkCollisions = function (){
-    allEnemies.forEach(function (enemy){
-        if (enemy.y == player.y){
-            if(enemy.x >= player.x - 30 && enemy.x <= player.x + 30){
+var checkCollisions = function() {
+    allEnemies.forEach(function (enemy) {
+        if (enemy.y == player.y) {
+            if(enemy.x >= player.x - 30 && enemy.x <= player.x + 30) {
                 player.lives--;
                 player.begin(200,400);
             }
@@ -81,9 +82,9 @@ var checkCollisions = function (){
 };
 
 //adds random number of enemies.
-var addEnemies = function(x){
+var addEnemies = function(x) {
     var arr = new Array;
-    for(var i = 0; i < x; i++){
+    for(var i = 0; i < x; i++) {
         var y = new Enemy;
         arr.push(y);
     }
