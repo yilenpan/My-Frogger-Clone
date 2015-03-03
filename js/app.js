@@ -9,11 +9,13 @@ var Enemy = function() {
     this.begin(-100,y)
 };
 
+//start position
 Enemy.prototype.begin = function(x,y) {
     this.x = x;
     this.y = y;
 };
 
+//redraws enemy
 Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt; //sets speed of enemy
     y = POSSIBLE_Y[Math.floor(Math.random() * 4)];
@@ -22,6 +24,7 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
+//draws enemy on canvas
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -36,6 +39,7 @@ var Player = function() {
 
 Player.prototype = Object.create( Enemy.prototype ); //copies render and begin function
 
+//updates the position of player
 Player.prototype.update = function() {
     if (this.y == 0) {
         this.score += 100;
