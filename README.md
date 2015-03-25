@@ -1,4 +1,4 @@
-frontend-nanodegree-arcade-game
+My Frogger Clone
 ===============================
 
 Hello! Welcome to my frogger app.
